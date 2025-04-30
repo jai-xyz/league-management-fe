@@ -9,8 +9,9 @@ import NotFound from './notFound'
 const RoutesComponents = () => {
   return (
     <Routes>
+          {/* // if url is not found, redirect to 404 page */}
+        <Route path="*" element={<NotFound/>}/>
 
-  <Route path="*" element={<NotFound/>}/>
         <Route path="/" element={<Test/>} />
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/login" element={<Login/>} />
