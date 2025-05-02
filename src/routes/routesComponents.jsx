@@ -4,7 +4,8 @@ import Login from  '../pages/auth/login'
 import Dashboard from '../pages/admin/dashboard'
 import Test from '../pages/home/Test'
 import Register from '../pages/auth/register'
-import NotFound from './notFound'
+import NotFound from './notFound' 
+import ProtectedRoutes from './protectedRoutes'
 
 const RoutesComponents = () => {
   return (
@@ -13,9 +14,15 @@ const RoutesComponents = () => {
         <Route path="*" element={<NotFound/>}/>
 
         <Route path="/" element={<Test/>} />
-        <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
+
+
+        <Route element={<ProtectedRoutes/>}>
+        <Route path="/dashboard" element={<Dashboard/>} />
+        </Route>
+        
+        
     </Routes>
   )
 }
