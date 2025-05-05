@@ -1,11 +1,13 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Login from  '../pages/auth/login'
+import Login from '../pages/auth/Login'
 import Dashboard from '../pages/admin/dashboard'
 import Test from '../pages/home/Test'
-import Register from '../pages/auth/register'
-import NotFound from './notFound' 
+import Register from '../pages/auth/Register'
+import NotFound from './NotFound' 
 import ProtectedRoutes from './protectedRoutes'
+import AdminLayout from '../layout/admin/AdminLayout'
+import Teams from '../pages/admin/Teams'
 
 const RoutesComponents = () => {
   return (
@@ -18,9 +20,13 @@ const RoutesComponents = () => {
         <Route path="/register" element={<Register/>} />
 
 
-        <Route element={<ProtectedRoutes/>}>
-        <Route path="/dashboard" element={<Dashboard/>} />
+        <Route element={<ProtectedRoutes />}>
+        <Route path="/admin" element={<AdminLayout/>}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="teams" element={<Teams />} />
         </Route>
+      </Route>
+
         
         
     </Routes>
