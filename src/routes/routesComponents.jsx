@@ -7,7 +7,8 @@ import Register from "../pages/auth/register";
 import NotFound from "./NotFound";
 import ProtectedRoutes from "./protectedRoutes";
 import AdminLayout from "../layout/admin/AdminLayout";
-import Teams from "../pages/admin/teams/teams";
+import Teams from "../pages/admin/teams/Teams";
+import AddTeams from "../pages/admin/teams/AddTeams";
 
 const RoutesComponents = () => {
   return (
@@ -23,6 +24,7 @@ const RoutesComponents = () => {
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="teams" element={<Teams />} />
+          <Route path="teams/add" element={<AddTeams />} />
         </Route>
       </Route>
     </Routes>
