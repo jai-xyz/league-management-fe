@@ -9,6 +9,7 @@ import ProtectedRoutes from "./protectedRoutes";
 import AdminLayout from "../layout/admin/AdminLayout";
 import Teams from "../pages/admin/teams/Teams";
 import AddTeams from "../pages/admin/teams/AddTeams";
+import EditTeams from "../pages/admin/teams/EditTeams";
 
 const RoutesComponents = () => {
   return (
@@ -25,6 +26,7 @@ const RoutesComponents = () => {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="teams" element={<Teams />} />
           <Route path="teams/add" element={<AddTeams />} />
+          <Route path="teams/edit/:id" element={<EditTeams/>} />
         </Route>
       </Route>
     </Routes>
