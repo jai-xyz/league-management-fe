@@ -1,13 +1,13 @@
 import React from 'react'
 import ApiService from '../../../services/api-service';
-const DeleteTeams = ({id} , ondDelete) => {
+const DeleteTeams = ({id } ) => {
 
     const handleDelete = async () => {
         try {
             const response = await ApiService.delete(`teams/${id}`);
             console.log('Team deleted successfully:', response.data);
             alert('Team deleted successfully');
-            ondDelete(id); // Call the parent function to update the state
+           
         } catch (error) {
             console.error('Error deleting team:', error);
         }
