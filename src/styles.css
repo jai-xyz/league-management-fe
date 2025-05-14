@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+/* THIS IS WORKING KAHIT MAY WARNING */
+@theme {
+  --color-primary: #1d4ed8;
+  --color-dark-primary: #1e3a8a; /* this is for button hover or for darker color */
+  --color-secondary: #f3f4f6;
+  --color-accent: #ef4444;
+  --color-neutral: #374151; /* this is for text */
+  --color-border: #d1d5db; /* this is for borders and table divider */
+}

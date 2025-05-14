@@ -51,7 +51,7 @@ const ShowTeams = ({ division_id, name }) => {
               <td className="border border-gray-200 px-4 py-2">
                 <Link
                   to={`/admin/teams/edit/${team.team_id}`}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className="bg-primary hover:bg-dark-primary text-white font-bold py-2 px-4 rounded" // theme can also use by tailwindcss way
                 >
                   Edit
                 </Link>
