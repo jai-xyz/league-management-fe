@@ -1,18 +1,20 @@
 import React from 'react'
 import { useQuery} from '@tanstack/react-query'
-import {getTeams} from '../../../api/teamsApi'
+import { getTeamsByDivision } from '../../../api/getTeamsbyDivision'
 import { Link } from 'react-router-dom'
 import DeleteTeams from './DeleteTeams'
-import Dropdown from './Dropdown'
 
-const ShowTeams = () => {
+
+const ShowTeams = ({division_id , name}) => {
 
    
     const { data, isLoading, isError } = useQuery({
-        queryKey: ['teams'],
-        queryFn: getTeams,
+        queryKey: ['getTeamsByDivision', division_id],
+        queryFn: () => getTeamsByDivision(division_id),
+        enabled: !!division_id,  // Only fetch if id is truthy
         refetchOnWindowFocus: false,
     })
+
 
     if (isLoading) {
         return <div>Loading...</div>
@@ -23,9 +25,8 @@ const ShowTeams = () => {
 
   return (
     <div>
-        <h2 className="mb-4 text-xl font-bold text-gray-900">Senior Division</h2>
-        <Dropdown/>
-        <h2 className="mb-4 text-xl font-bold text-gray-900">Teams</h2>
+       
+        <h2 className="mb-4 text-xl font-bold text-gray-900">{name}</h2>
         <table className="min-w-full border-collapse border border-gray-200">
             <thead>
                 <tr>
@@ -38,7 +39,7 @@ const ShowTeams = () => {
                 </tr>
             </thead>
             <tbody>
-                {data.map((team) => (
+                { data?.map((team) => (
                     <tr key={team.team_id}>
                         <td className="border border-gray-200 px-4 py-2">{team.team_id}</td>
                         <td className="border border-gray-200 px-4 py-2">{team.name}</td>

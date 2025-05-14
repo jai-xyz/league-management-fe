@@ -7,7 +7,7 @@ import {
   Avatar,
   Button,
   TextField,
-  FormControlLabel,
+  FormControlLabel, 
   Checkbox,
   Link,
   Typography
@@ -42,27 +42,7 @@ const Login = () => {
   }
 
   return (
-    // <div className='flex flex-col items-center justify-center h-screen'>
-    //   <TextField
-    //    variant="outlined"
-    //     label="email" 
-    //     value={form.email}
-    //     onChange={(e) => setForm({...form,email:e.target.value})} 
-    //     />
-    //   <TextField 
-    //     variant="outlined" 
-    //     label="password" type="password"
-    //     value={form.password}
-    //     onChange={(e)=> setForm({...form,password:e.target.value})}
-    //     />
-    //   <button 
-    //   className='bg-blue-500 text-white px-4 py-2 rounded mt-4'
-    //   type="submit"
-    //   onClick={handleSubmit}
-    //   >
-    //     login
-    //   </button>
-    // </div>
+    
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
     <div className="w-full max-w-md p-6 bg-white rounded-2xl shadow-lg">
       <div className="flex flex-col items-center mb-6">

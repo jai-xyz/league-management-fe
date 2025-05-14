@@ -1,12 +1,28 @@
-import {React , useState} from 'react';
+import {React ,  useState} from 'react';
 import ApiService from '../../../services/api-service';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { getDivisionID } from '../../../api/getDivisionID';
+
 const AddTeams = () => {
+
+  const{divisionId } = useParams();
+
+  const { data, isLoading, isError } = useQuery({
+        queryKey: ['getDivisionID', divisionId ],
+        queryFn: () => getDivisionID(divisionId ),
+        enabled: !!divisionId ,  // Only fetch if id is truthy
+        refetchOnWindowFocus: false,
+    })
+
+  
 
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [form, setForm] = useState({
     name: '',
     alias: '',
+    division_id: divisionId ,
   });
 
   const handleImageChange = (e) => {
@@ -22,6 +38,7 @@ const AddTeams = () => {
     const formData = new FormData();
     formData.append('name', form.name);
     formData.append('alias', form.alias);
+    formData.append('division_id', form.division_id); // Append the division ID
     formData.append('logo', imageFile); // Append the file to the FormData
 
     try {
@@ -43,10 +60,15 @@ const AddTeams = () => {
 
   }
 
-
-
   
+  
+  if (isLoading) {  
+      return <div>Loading...</div>
+  }
+  if (isError) {
 
+      return <div>Error fetching teams</div>
+  }
 
   return (
     <section className="bg-white">
@@ -54,6 +76,26 @@ const AddTeams = () => {
         <h2 className="mb-4 text-xl font-bold text-gray-900">Add a new team</h2>
         <form action="#">
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+             <div className="sm:col-span-2">
+              <label
+                htmlFor="name"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                Divison Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                placeholder={`${data?.name}`}
+                required
+                disabled
+                value={data?.name}
+                
+              
+              />
+            </div>
             <div className="sm:col-span-2">
               <label
                 htmlFor="name"

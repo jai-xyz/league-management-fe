@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import {getDivision} from '../../../api/divisionApi'
 import DeleteDivision from './DeleteDivision'
+
 const ShowDivision = () => {
 
  const { data, isLoading, isError } = useQuery({
@@ -22,9 +23,6 @@ const ShowDivision = () => {
   return (
     <div>
         <h2 className="mb-4 text-xl font-bold text-gray-900">Teams</h2>
-         <Button variant="contained">
-        <Link to="/admin/division/add">Add Division</Link>  
-        </Button>
         <table className="min-w-full border-collapse border border-gray-200">
             <thead>
                 <tr>
@@ -35,7 +33,7 @@ const ShowDivision = () => {
                 </tr>
             </thead>
             <tbody>
-                {data.map((division) => (
+                {data?.map((division) => (
                     <tr key={division.division_id}>
                         <td className="border border-gray-200 px-4 py-2">{division.division_id}</td>
                         <td className="border border-gray-200 px-4 py-2">{division.name}</td>

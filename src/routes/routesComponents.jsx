@@ -10,8 +10,8 @@ import AdminLayout from "../layout/admin/AdminLayout";
 import Teams from "../pages/admin/teams/Teams";
 import AddTeams from "../pages/admin/teams/AddTeams";
 import EditTeams from "../pages/admin/teams/EditTeams";
-import Division from "../pages/admin/division/ShowDivision";
-import AddDivision from "../pages/admin/division/addDivision";
+import Division from "../pages/admin/division/Division";
+import AddDivision from "../pages/admin/division/AddDivision";
 import EditDivision from "../pages/admin/division/Editdivision";
 
 const RoutesComponents = () => {
@@ -31,7 +31,7 @@ const RoutesComponents = () => {
           <Route path="division/add" element={<AddDivision/>} />
           <Route path= "division/edit/:id" element={<EditDivision/>} />
           <Route path="teams" element={<Teams />} />
-          <Route path="teams/add" element={<AddTeams />} />
+          <Route path="teams/add/:divisionId" element={<AddTeams />} />
           <Route path="teams/edit/:id" element={<EditTeams/>} />
         </Route>
       </Route>
