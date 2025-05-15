@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import Sidebar from '../../components/admin/Sidebar';
-import Navbar from '../../components/admin/Navbar';
-import Header from '../../components/admin/Header';
+import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../../components/admin/Sidebar";
+import Navbar from "../../components/admin/Navbar";
+import Header from "../../components/admin/Header";
 function AdminLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -15,7 +15,7 @@ function AdminLayout() {
       {/* Sidebar */}
       <div
         className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform ${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 sm:translate-x-0`}
       >
         <Sidebar />
@@ -30,7 +30,7 @@ function AdminLayout() {
       )}
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col sm:ml-64">
+      <div className="flex-1 flex flex-col sm:ml-64 bg-secondary">
         {/* Navbar */}
         <Header toggleSidebar={toggleSidebar} />
 
