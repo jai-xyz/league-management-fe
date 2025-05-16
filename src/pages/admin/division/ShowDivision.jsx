@@ -4,8 +4,17 @@ import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import {getDivision} from '../../../api/divisionApi'
 import DeleteDivision from './DeleteDivision'
+import { CompactTable } from '@table-library/react-table-library/compact';
+import { useTheme } from '@table-library/react-table-library/theme';
+import { DEFAULT_OPTIONS, getTheme } from '@table-library/react-table-library/material-ui';
+
+
+// const key = 'Base';
 
 const ShowDivision = () => {
+
+     const materialTheme = getTheme(DEFAULT_OPTIONS);
+    const theme = useTheme(materialTheme);
 
  const { data, isLoading, isError } = useQuery({
         queryKey: ['division'],
@@ -20,42 +29,49 @@ const ShowDivision = () => {
         return <div>Error fetching division</div>
     }
 
-  return (
-    <div>
-        <h2 className="mb-4 text-xl font-bold text-gray-900">Teams</h2>
-        <table className="min-w-full border-collapse border border-gray-200">
-            <thead>
-                <tr>
-                    <th className="border border-gray-200 px-4 py-2">ID</th>
-                    <th className="border border-gray-200 px-4 py-2">Name</th>
-                    <th className="border border-gray-200 px-4 py-2">Actions</th>
-                    <th className="border border-gray-200 px-4 py-2">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {data?.map((division) => (
-                    <tr key={division.division_id}>
-                        <td className="border border-gray-200 px-4 py-2">{division.division_id}</td>
-                        <td className="border border-gray-200 px-4 py-2">{division.name}</td>
-                        <td className="border border-gray-200 px-4 py-2">
-                            <Link 
-                                to={`/admin/division/edit/${division.division_id}`}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                            >
-                                Edit
-                            </Link>
-                        </td>
-                        <td className="border border-gray-200 px-4 py-2">
-                           <DeleteDivision id={division.division_id}/>
-                        </td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-      
-    </div>
+    const nodes = Array.isArray(data) 
+        ? data.map((division) => ({
+            id: division.division_id,
+            name: division.name,
+            created_at: division.created_at,
+        })) 
+        : [];
 
-   
+       const COLUMNS = [
+    // { label: 'ID', renderCell: (item) => item.id },
+    { label: 'Name', renderCell: (item) => item.name },
+     { 
+    label: 'Created_at', 
+    renderCell: (item) => 
+      new Date(item.created_at).toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        // hour: '2-digit',
+        // minute: '2-digit',
+      })
+  },
+    
+    { label: 'Actions', renderCell: (item) => <Link to={`/admin/division/edit/${item.id}`}>Edit</Link> },
+    { label: 'Actions', renderCell: (item) => <DeleteDivision id={item.id} /> },
+  ];
+ 
+
+    
+
+  return (
+
+   <>
+    <CompactTable
+                data={{ nodes }}
+                columns={COLUMNS}
+                theme={theme}
+                rowKey="id"
+            />
+
+    
+      
+    </>
 
 
   )

@@ -41,7 +41,7 @@ const Teams = () => {
       }
   return (
     <div>
-      <div>
+      <div className='mb-4'>
             <Button
               id="fade-button"
               aria-controls={open ? 'fade-menu' : undefined}
@@ -69,13 +69,16 @@ const Teams = () => {
             </Menu>
           </div>
       
-     {selectedDivision && (
-                <Button variant="contained">
-                    <Link to={`/admin/teams/add/${selectedDivision}`} style={{ color: 'white', textDecoration: 'none' }}>
-                        Add Teams for {divisionName}
-                    </Link>
-                </Button>
-            )}
+          {selectedDivision && (
+       
+                      <Button variant="contained">
+                          <Link to={`/admin/teams/add/${selectedDivision}`} style={{ color: 'white', textDecoration: 'none' }}>
+                              Add Teams for {divisionName}
+                          </Link>
+                      </Button>
+                  )}
+          <br />
+        
             
       
       <ShowTeams division_id={selectedDivision} name={divisionName}/>
