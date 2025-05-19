@@ -43,7 +43,6 @@ const Editdivision = () => {
   
   }
 
-
   return (
    <div>
                <form className="max-w-md mx-auto" onSubmit={handleSubmit}>

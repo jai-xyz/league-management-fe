@@ -31,8 +31,6 @@ const EditTeams = () => {
     fetchTeam(); 
   }, [id]);
 
-
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
