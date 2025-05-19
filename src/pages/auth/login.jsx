@@ -30,7 +30,7 @@ const Login = () => {
       if (response.status === 200) {
         Cookies.set("token", token, { expires: 7 }); // Set cookie to expire in 7 days
         setToken(token);
-        navigate("/admin");
+        navigate("/admin/dashboard");
       }
     } catch (error) {
       console.error("Error logging in:", error);

@@ -1,49 +1,27 @@
-import React, {  } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Dashboard, Groups, Workspaces } from "@mui/icons-material";
 
-const Sidebar = () => {
+const Sidebar = ({ isSidebarOpen }) => {
   const location = useLocation();
   return (
     <>
       {/* Sidebar Toggle Button */}
-      <button
-        data-drawer-target="sidebar-multi-level-sidebar"
-        data-drawer-toggle="sidebar-multi-level-sidebar"
-        aria-controls="sidebar-multi-level-sidebar"
-        type="button"
-        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+      <aside
+        id="main-sidebar"
+        className={`z-98 mt-18 ${
+          isSidebarOpen ? "w-16" : "w-60"
+        } transition-all duration-300`}
       >
-        <span className="sr-only">Open sidebar</span>
-        <svg
-          className="w-6 h-6"
-          aria-hidden="true"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clipRule="evenodd"
-            fillRule="evenodd"
-            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-          ></path>
-        </svg>
-      </button>
-
-      <aside id="application-sidebar-brand" className=" ">
-        <div className="p-5">
-          <Link to="/admin/dashboard" className="text-nowrap">
-            <img src="" alt="LOGO" />
-          </Link>
-        </div>
         <div className="scroll-sidebar">
-          <div className="px-6 mt-8">
+          <div className="px-2 mt-8">
             <nav className="w-full flex flex-col sidebar-nav">
               <ul id="sidebarnav" className="text-sm">
-                <li className="text-xs font-bold pb-4">
+                {/* <li className="text-xs font-bold pb-4">
                   <span className="text-neutral">HOME</span>
-                </li>
+                </li> */}
 
-                <li id="sidebar-item" className="mb-4">
+                <li id="sidebar-item">
                   <Link
                     to="/admin/dashboard"
                     className={`sidebar-link p-3 rounded-md w-full flex items-center ${
@@ -52,7 +30,7 @@ const Sidebar = () => {
                         : "text-gray-500 hover:bg-gray-200" // Default styles
                     }`}
                   >
-                    <svg
+                    {/* <svg
                       className={`w-5 h-5 transition duration-75 ${
                         location.pathname === "/admin/dashboard"
                           ? "text-white"
@@ -62,20 +40,34 @@ const Sidebar = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="currentColor"
                       viewBox="0 0 22 21"
+                    > */}
+                    <Dashboard
+                      className={`w-5 h-5 transition duration-75 ${
+                        location.pathname === "/admin/dashboard"
+                          ? "text-white"
+                          : "text-gray-500"
+                      }`}
+                    />
+                    <span
+                      className={`ms-2 font-semibold 
+                      ${
+                        isSidebarOpen
+                          ? "opacity-0 max-w-0 overflow-hidden transition-all duration-500 ease-in-out"
+                          : "opacity-100 max-w-xs transition-all duration-500 ease-in-out"
+                      }
+                    `}
                     >
-                      <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
-                      <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
-                    </svg>
-                    <span className="ms-2 font-semibold">Dashboard</span>
+                      Dashboard
+                    </span>
                   </Link>
                 </li>
 
-                <hr className="border-t border-gray-200 mx-2" />
-                <li className="text-xs font-bold my-4">
+                <hr className="border-t border-gray-200 mx-2 my-2" />
+                {/* <li className="text-xs font-bold my-4">
                   <span className="text-neutral">MANAGE</span>
-                </li>
+                </li> */}
 
-                <li id="sidebar-item" className="mb-1">
+                <li id="sidebar-item" className="mb-2">
                   <Link
                     to="/admin/division"
                     className={`sidebar-link p-3 rounded-md w-full flex items-center ${
@@ -84,21 +76,24 @@ const Sidebar = () => {
                         : "text-gray-500 hover:bg-gray-200" // Default styles
                     }`}
                   >
-                    <svg
+                    <Workspaces
                       className={`w-5 h-5 transition duration-75 ${
                         location.pathname === "/admin/division"
                           ? "text-white"
                           : "text-gray-500"
                       }`}
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 22 21"
+                    />
+                    <span
+                      className={`ms-2 font-semibold 
+                      ${
+                        isSidebarOpen
+                          ? "opacity-0 max-w-0 overflow-hidden transition-all duration-500 ease-in-out"
+                          : "opacity-100 max-w-xs transition-all duration-500 ease-in-out"
+                      }
+                    `}
                     >
-                      <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
-                      <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
-                    </svg>
-                    <span className="ms-2 font-semibold">Divison</span>
+                      Divison
+                    </span>
                   </Link>
                 </li>
 
@@ -111,21 +106,24 @@ const Sidebar = () => {
                         : "text-gray-500 hover:bg-gray-200" // Default styles
                     }`}
                   >
-                    <svg
+                    <Groups
                       className={`w-5 h-5 transition duration-75 ${
                         location.pathname === "/admin/teams"
                           ? "text-white"
                           : "text-gray-500"
                       }`}
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 22 21"
+                    />
+                    <span
+                      className={`ms-2 font-semibold transition-all duration-500 ease-in-out
+                      ${
+                        isSidebarOpen
+                          ? "opacity-0 max-w-0 overflow-hidden"
+                          : "opacity-100 max-w-xs"
+                      }
+                    `}
                     >
-                      <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
-                      <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
-                    </svg>
-                    <span className="ms-2">Teams</span>
+                      Teams
+                    </span>
                   </Link>
                 </li>
               </ul>
