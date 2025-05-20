@@ -1,22 +1,29 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getDivision } from "../../../api/divisionApi";
 import DeleteDivision from "./DeleteDivision";
-import { CompactTable } from "@table-library/react-table-library/compact";
-import { useTheme } from "@table-library/react-table-library/theme";
 import {
-  DEFAULT_OPTIONS,
-  getTheme,
-} from "@table-library/react-table-library/material-ui";
-import { useMemo } from "react";
-
-// const key = 'Base';
+  Table,
+  Header,
+  HeaderRow,
+  Body,
+  Row,
+  HeaderCell,
+  Cell,
+} from "@table-library/react-table-library/table";
+import {
+  useSort,
+  HeaderCellSort,
+} from "@table-library/react-table-library/sort";
+import UnfoldMoreOutlinedIcon from "@mui/icons-material/UnfoldMoreOutlined";
+import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
+import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+import { useTheme } from "@table-library/react-table-library/theme";
+import { getTheme } from "@table-library/react-table-library/baseline";
+import EditIcon from "@mui/icons-material/Edit";
 
 const ShowDivision = () => {
-  const materialTheme = getTheme(DEFAULT_OPTIONS);
-  const theme = useTheme(materialTheme);
-
   const { data, isLoading, isError } = useQuery({
     queryKey: ["division"],
     queryFn: getDivision,
@@ -35,46 +42,97 @@ const ShowDivision = () => {
     [data]
   );
 
-  const COLUMNS = useMemo(
-    () => [
-      { label: "Name", renderCell: (item) => item.name },
-      {
-        label: "Created At",
-        renderCell: (item) =>
-          new Date(item.created_at).toLocaleString("en-US", {
-            year: "numeric",
-            month: "short",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
+  // Prepare data for the table
+  const tableData = { nodes };
+
+  const theme = useTheme({
+    HeaderRow: `
+        .th {
+          border-bottom: 1px solid #a0a8ae;
+        }
+      `,
+    BaseCell: `
+        &:not(:last-of-type) {
+          border-right: 1px solid #a0a8ae;
+        }
+
+        padding: 8px 16px;
+      `,
+  });
+
+  // Sorting logic
+  const sort = useSort(
+    tableData,
+    {
+      // onChange: onSortChange,
+    },
+    {
+      sortIcon: {
+        margin: "0px",
+        iconDefault: <UnfoldMoreOutlinedIcon fontSize="small" />,
+        iconUp: <KeyboardArrowUpOutlinedIcon fontSize="small" />,
+        iconDown: <KeyboardArrowDownOutlinedIcon fontSize="small" />,
       },
-      {
-        label: "Edit",
-        renderCell: (item) => (
-          <Link to={`/admin/division/edit/${item.id}`}>Edit</Link>
-        ),
+      sortFns: {
+        NAME: (array) => array.sort((a, b) => a.name.localeCompare(b.name)),
+        CREATED_AT: (array) =>
+          array.sort((a, b) => new Date(a.created_at) - new Date(b.created_at)),
       },
-      {
-        label: "Delete",
-        renderCell: (item) => <DeleteDivision id={item.id} />,
-      },
-    ],
-    []
+    }
   );
+
+  function onSortChange(action, state) {
+    // Optional: handle sort state changes
+    // console.log(action, state);
+  }
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching division</div>;
 
   return (
-    <>
-      <CompactTable
-        data={{ nodes }}
-        columns={COLUMNS}
-        theme={theme}
-        rowKey="id"
-      />
-    </>
+    <Table data={tableData} sort={sort}>
+      {(tableList) => (
+        <>
+          <Header>
+            <HeaderRow>
+              <HeaderCellSort sortKey="NAME">NAME</HeaderCellSort>
+              <HeaderCellSort sortKey="CREATED_AT">CREATED AT</HeaderCellSort>
+              <HeaderCell>ACTIONS</HeaderCell>
+            </HeaderRow>
+          </Header>
+          <Body>
+            {tableList.map((item) => (
+              <Row key={item.id} item={item}>
+                <Cell>{item.name}</Cell>
+                <Cell>
+                  {new Date(item.created_at).toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </Cell>
+                <Cell>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "0.5rem",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Link to={`/admin/division/edit/${item.id}`}>
+                      <EditIcon className="text-green-500" />
+                    </Link>
+                    <DeleteDivision id={item.id} />
+                  </div>
+                </Cell>
+              </Row>
+            ))}
+          </Body>
+        </>
+      )}
+    </Table>
   );
 };
 

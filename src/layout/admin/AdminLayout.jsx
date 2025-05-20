@@ -12,18 +12,14 @@ function AdminLayout() {
   return (
     <div className="h-screen flex flex-col">
       {/* Header at the top */}
-      <Header
-        toggleSidebar={toggleSidebar}
-        isSidebarOpen={isSidebarOpen}
-        className="shadow-lg"
-      />
+      <Header toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 
       <div className="flex flex-1">
         {/* Sidebar */}
         <div
           className={`fixed inset-y-0 left-0 z-50 bg-white shadow-lg transform ${
             isSidebarOpen ? "w-16" : "w-60"
-          } transition-all duration-300 `}
+          }  `}
         >
           <Sidebar isSidebarOpen={isSidebarOpen} />
         </div>
@@ -38,12 +34,16 @@ function AdminLayout() {
 
         {/* Main Content */}
         <div
-          className={`flex-1 flex flex-col  bg-secondary transition-all duration-300 ${
+          className={`flex-1 flex flex-col  bg-secondary ${
             isSidebarOpen ? "ml-16" : "ml-60"
           }`}
         >
           <div className="flex-1 flex justify-center items-center">
-            <main className="w-full max-w-4xl p-4">
+            <main
+              className={`w-full  p-4 ${
+                isSidebarOpen ? "max-w-full" : "max-w-full"
+              }`}
+            >
               <Outlet />
             </main>
           </div>

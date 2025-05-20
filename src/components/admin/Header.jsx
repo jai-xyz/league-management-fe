@@ -5,7 +5,7 @@ import { Menu, MenuOpen } from "@mui/icons-material";
 const Header = ({ toggleSidebar, isSidebarOpen }) => {
   return (
     <>
-      <div className="flex fixed top-0 left-0 right-0 z-99 bg-primary shadow-xs">
+      <div className="flex fixed top-0 left-0 right-0 z-99 bg-primary shadow-md">
         <div className="flex items-center justify-center">
           <button
             onClick={toggleSidebar}
