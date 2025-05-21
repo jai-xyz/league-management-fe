@@ -5,6 +5,8 @@ import { Stack, TextField } from "@mui/material";
 import { CompactTable } from "@table-library/react-table-library/compact";
 import { useTheme } from "@table-library/react-table-library/theme";
 import { DEFAULT_OPTIONS, getTheme } from "@table-library/react-table-library/material-ui";
+import { Link } from "react-router-dom";
+import DeleteTeams from "./DeleteTeams";
 
 const ShowTeams = ({ division_id }) => {
   const materialTheme = getTheme(DEFAULT_OPTIONS);
@@ -27,7 +29,7 @@ const ShowTeams = ({ division_id }) => {
     () =>
       Array.isArray(data)
         ? data.map((team) => ({
-            id: team.teams_id,
+            id: team.team_id,
             name: team.name,
             alias: team.alias,
             logo: team.logo,
@@ -61,6 +63,17 @@ const ShowTeams = ({ division_id }) => {
         ),
       },
       { label: "Created At", renderCell: (item) => item.created_at },
+      {
+        label: "Actions",
+        renderCell: (item) => (
+          <div className="flex gap-2">
+            <Link to={`/admin/teams/edit/${item.id}`}>
+              <button className="text-blue-500">Edit</button>
+            </Link>
+            <DeleteTeams Teams id={item.id} />
+          </div>
+        ),
+      }
     ],
     []
   );

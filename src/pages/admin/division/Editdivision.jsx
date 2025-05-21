@@ -3,11 +3,15 @@ import ApiService from '../../../services/api-service'
 import { useParams } from 'react-router-dom'
 import { TextField, Button } from '@mui/material';
 import { useState , useEffect } from 'react';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 const Editdivision = () => {
     const{id} = useParams();
+    const navigate = useNavigate();
     const [form, setForm] = useState({
             name: '',
         });
+    const [error, setError] = useState(null);
 
      useEffect(() => {
     const fetch = async () => {
@@ -35,10 +39,18 @@ const Editdivision = () => {
             name: form.name,
         });
         if (response.status === 200) {
-            console.log('Division updated successfully');
+            // Show success alert
+            await Swal.fire({
+                title: 'Division Updated successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+            navigate('/admin/division');
         }
     } catch (error) {
-        console.error('Error updating division:', error);
+       if(error.response?.status === 422){
+        setError(error.response.data.error);
+       }
     }
   
   }
@@ -48,12 +60,14 @@ const Editdivision = () => {
                <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
                    <div className='flex flex-col gap-4'>
                        <TextField
+                          error = {error?.name ? true : false}
+                           helperText={error?.name}
                            id="standard-basic"
                            label="Division Name"
                            variant="standard"
                            value={form.name}
                            onChange={(e) =>setForm({ ...form, name: e.target.value })}
-                           required
+                           
                        />
                        <Button type="submit" variant="contained">
                            Update Division

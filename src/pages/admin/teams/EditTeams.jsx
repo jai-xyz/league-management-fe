@@ -1,11 +1,18 @@
 import {React , useEffect, useState} from 'react';
 import ApiService from '../../../services/api-service';
 import { useParams } from 'react-router-dom';
+import { TextField, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import { Button } from '@mui/material';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 
 const EditTeams = () => {
 
   const{id} = useParams();
+  const Navigate = useNavigate(); 
+  const [error, setError] = useState(null);
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [form, setForm] = useState({
@@ -60,98 +67,91 @@ const EditTeams = () => {
         },
       });
         if (response.status === 200) {
-            console.log('Team updated successfully:', response.data);
+           await Swal.fire({
+            title: 'Team Updated successfully!',
+            text: 'Success!',
+            icon: 'success',
+            confirmButtonText: 'Okay',
+          });
+
+           Navigate('/admin/teams')
+
+                // Reload the page after the alert is closed
+                window.location.reload();
+
         }
     } catch (error) {
-      console.error('Error updating team:', error); 
+      if(error.response?.status === 422) {
+        setError(error.response.data.error);
+      }
     }
-    setForm({
-      name: '',
-      alias: '',
-    });
-    setImage(null);
-    setImageFile(null); 
-
+   
   }
 
   return (
     <section className="bg-white">
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-        <h2 className="mb-4 text-xl font-bold text-gray-900">Update a team</h2>
-        <form action="#">
-          <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="name"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Team Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                placeholder="Type product name"
-                required
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-              />
-            </div>
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="name"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Team Alias
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                placeholder="Type product name"
-                required
-                value={form.alias}
-                onChange={(e) => setForm({ ...form, alias: e.target.value })}
-              />
-            </div>
-            <div className="w-full">
-              <label
-                htmlFor="logo"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Team Logo
-              </label>
-              <input
-                type="file"
-                name="logo"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                placeholder="Logo"
-                required
-                value={form.logo}
-                onChange={handleImageChange}
-                accept="image/*"
-
-              />
-            </div>
-            {image && (
+         <Typography
+        variant="h4"
+        component="h1"
+        className=" text-gray-800 font-bold py-4"
+      >
+        Add Team
+      </Typography>
+          <Box sx={{ width: 500, maxWidth: '100%' }}>
+       
+      <TextField
+        fullWidth
+         error ={error?.name ? true : false}
+        helperText={error?.name ? error.name[0] : ""}
+        label="Team Name"
+        id="fullWidth"
+        sx={{ marginTop: 2 }}
+        value={form.name}
+        onChange={(e) => setForm({ ...form, name: e.target.value })}
+      />
+      <TextField
+        fullWidth
+        error ={error?.alias ? true : false}
+        helperText={error?.alias ? error.alias[0] : ""}
+        label="Team Alias"
+        id="fullWidth"
+        sx={{ marginTop: 2 }}
+        value={form.alias}
+        onChange={(e) => setForm({ ...form, alias: e.target.value })}
+      />
+       <TextField
+        error ={error?.logo ? true : false}
+        fullWidth
+        id="fullWidth"
+        sx={{ marginTop: 2 }}
+        onChange={handleImageChange}
+        accept="image/*"
+        type="file"
+        helperText="Upload your team logo"
+      />
+         {image && (
               <div className="mt-4">
-                <label className="block mb-2 text-sm font-medium text-gray-900">
+                <Typography variant="subtitle1" gutterBottom>
                   Preview:
-                </label>
-                <img src={image} alt="Event Preview" className="w-full h-auto rounded-md shadow-inner" />
+                </Typography>
+                <img
+                  src={image.startsWith('blob') ? image : `/storage/${image}`}
+                  alt="Event Preview"
+                  className="w-full h-auto rounded-md shadow-inner"
+                />
               </div>
             )}
-          </div>
-          <button
-            type="submit"
-            onClick={handleSubmit}
-            className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-black bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800"
-          >
-            Update Teams
-          </button>
-        </form>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleSubmit}
+        sx={{ marginTop: 2 }}
+      >
+        Add Team
+      </Button>
+
+      </Box>
       </div>
     </section>
   );

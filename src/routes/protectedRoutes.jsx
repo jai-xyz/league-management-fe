@@ -3,6 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 import {AppContext} from '../provider/appContext'
 import ApiService from '../services/api-service';
 
+
 const ProtectedRoutes = () => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(null);
