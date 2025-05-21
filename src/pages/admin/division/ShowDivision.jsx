@@ -45,19 +45,10 @@ const ShowDivision = () => {
   // Prepare data for the table
   const tableData = { nodes };
 
-  const theme = useTheme({
-    HeaderRow: `
-        .th {
-          border-bottom: 1px solid #a0a8ae;
-        }
-      `,
+  const theme = useTheme(getTheme(), {
     BaseCell: `
-        &:not(:last-of-type) {
-          border-right: 1px solid #a0a8ae;
-        }
-
-        padding: 8px 16px;
-      `,
+    
+  `,
   });
 
   // Sorting logic
@@ -90,20 +81,33 @@ const ShowDivision = () => {
   if (isError) return <div>Error fetching division</div>;
 
   return (
-    <Table data={tableData} sort={sort}>
+    <Table data={tableData} sort={sort} theme={theme}>
       {(tableList) => (
         <>
           <Header>
-            <HeaderRow>
-              <HeaderCellSort sortKey="NAME">NAME</HeaderCellSort>
-              <HeaderCellSort sortKey="CREATED_AT">CREATED AT</HeaderCellSort>
-              <HeaderCell>ACTIONS</HeaderCell>
+            <HeaderRow
+              style={{
+                backgroundColor: "#4b5462",
+                color: "#ffffff",
+              }}
+            >
+              <HeaderCellSort sortKey="NAME">
+                <div className="p-2">NAME</div>
+              </HeaderCellSort>
+              <HeaderCellSort sortKey="CREATED_AT">
+                <div> CREATED AT</div>
+              </HeaderCellSort>
+              <HeaderCell>
+                <div> ACTION</div>
+              </HeaderCell>
             </HeaderRow>
           </Header>
           <Body>
             {tableList.map((item) => (
               <Row key={item.id} item={item}>
-                <Cell>{item.name}</Cell>
+                <Cell>
+                  <div className="p-2">{item.name} </div>
+                </Cell>
                 <Cell>
                   {new Date(item.created_at).toLocaleString("en-US", {
                     year: "numeric",
@@ -122,7 +126,7 @@ const ShowDivision = () => {
                     }}
                   >
                     <Link to={`/admin/division/edit/${item.id}`}>
-                      <EditIcon className="text-green-500" />
+                      <EditIcon className="#818a8c hover:text-green-500" />
                     </Link>
                     <DeleteDivision id={item.id} />
                   </div>
