@@ -27,7 +27,7 @@ const EditTeams = () => {
           name: team.name,
           alias: team.alias,
         });
-        setImage(`http://127.0.0.1:8000/storage/${team.logo}`); // Set the image URL for preview
+        setImage(`http://127.0.0.1:8000/storage/logo_images/${team.logo}`); // Set the image URL for preview
       } catch (error) {
         console.error("Error fetching team:", error);
       }
@@ -130,7 +130,7 @@ const EditTeams = () => {
                 Preview:
               </Typography>
               <img
-                src={image.startsWith("blob") ? image : `/storage/${image}`}
+                src={image ? image : "Failed to load image"}
                 alt="Image Preview"
                 className="w-full h-auto rounded-md shadow-inner"
               />

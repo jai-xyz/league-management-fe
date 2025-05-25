@@ -155,6 +155,9 @@ const ShowTeams = ({ division_id }) => {
                   <HeaderCellSort sortKey="ALIAS">
                     <div className="p-2">ALIAS</div>
                   </HeaderCellSort>
+                  <HeaderCell>
+                    <div className="p-2">LOGO</div>
+                  </HeaderCell>
                   <HeaderCellSort sortKey="CREATED_AT">
                     <div> CREATED AT</div>
                   </HeaderCellSort>
@@ -171,6 +174,16 @@ const ShowTeams = ({ division_id }) => {
                     </Cell>
                     <Cell>
                       <div className="p-2">{item.alias} </div>
+                    </Cell>
+                    <Cell>
+                      <div className="p-2">
+                        <img
+                          src={`http://127.0.0.1:8000/storage/logo_images/${item.logo}`}
+                          alt="Logo"
+                          width={100}
+                          style={{ objectFit: "contain" }}
+                        />
+                      </div>
                     </Cell>
                     <Cell>
                       {new Date(item.created_at).toLocaleString("en-US", {
