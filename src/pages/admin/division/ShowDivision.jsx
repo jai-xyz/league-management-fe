@@ -45,11 +45,7 @@ const ShowDivision = () => {
   // Prepare data for the table
   const tableData = { nodes };
 
-  const theme = useTheme(getTheme(), {
-    BaseCell: `
-    
-  `,
-  });
+  const theme = useTheme(getTheme());
 
   // Sorting logic
   const sort = useSort(
@@ -113,8 +109,6 @@ const ShowDivision = () => {
                     year: "numeric",
                     month: "short",
                     day: "2-digit",
-                    hour: "2-digit",
-                    minute: "2-digit",
                   })}
                 </Cell>
                 <Cell>

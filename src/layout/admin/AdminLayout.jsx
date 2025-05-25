@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/admin/Sidebar";
 import Header from "../../components/admin/Header";
+
 function AdminLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -38,9 +39,9 @@ function AdminLayout() {
             isSidebarOpen ? "ml-16" : "ml-60"
           }`}
         >
-          <div className="flex-1 flex justify-center items-center">
+          <div className="flex-1 flex justify-center items-baseline">
             <main
-              className={`w-full  p-4 ${
+              className={`w-full pt-20 px-4 ${
                 isSidebarOpen ? "max-w-full" : "max-w-full"
               }`}
             >

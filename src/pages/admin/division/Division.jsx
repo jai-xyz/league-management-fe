@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 
 const Division = () => {
   return (
-    <div>
+    <div className="">
       <Button variant="contained">
         <Link to="/admin/division/add">Add Division</Link>
       </Button>

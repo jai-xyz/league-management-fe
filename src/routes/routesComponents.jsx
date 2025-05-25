@@ -7,7 +7,7 @@ import Register from "../pages/auth/register";
 import NotFound from "./NotFound";
 import ProtectedRoutes from "./protectedRoutes";
 import AdminLayout from "../layout/admin/AdminLayout";
-import Teams from "../pages/admin/teams/Teams";
+import Teams from "../pages/admin/teams/teams";
 import AddTeams from "../pages/admin/teams/AddTeams";
 import EditTeams from "../pages/admin/teams/EditTeams";
 import Division from "../pages/admin/division/Division";
@@ -28,11 +28,11 @@ const RoutesComponents = () => {
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="division" element={<Division />} />
-          <Route path="division/add" element={<AddDivision/>} />
-          <Route path= "division/edit/:id" element={<EditDivision/>} />
+          <Route path="division/add" element={<AddDivision />} />
+          <Route path="division/edit/:id" element={<EditDivision />} />
           <Route path="teams" element={<Teams />} />
           <Route path="teams/add/:divisionId" element={<AddTeams />} />
-          <Route path="teams/edit/:id" element={<EditTeams/>} />
+          <Route path="teams/edit/:id" element={<EditTeams />} />
         </Route>
       </Route>
     </Routes>
