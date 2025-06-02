@@ -14,6 +14,7 @@ import {
   Row,
   HeaderCell,
   Cell,
+  useCustom,
 } from "@table-library/react-table-library/table";
 import {
   useSort,
@@ -85,89 +86,74 @@ const ShowTeams = ({ division_id }) => {
     [nodes, search]
   );
 
-  // const COLUMNS = useMemo(
-  //   () => [
-  //     { label: "Name", renderCell: (item) => item.name },
-  //     { label: "Alias", renderCell: (item) => item.alias },
-  //     {
-  //       label: "Logo",
-  //       renderCell: (item) => (
-  //         <img
-  //           src={`http://127.0.0.1:8000/storage/logo_images/${item.logo}`}
-  //           alt="Logo"
-  //           width={40}
-  //           style={{ objectFit: "contain" }}
-  //         />
-  //       ),
-  //     },
-  //     { label: "Created At", renderCell: (item) => item.created_at },
-  //     {
-  //       label: "Actions",
-  //       renderCell: (item) => (
-  //         <div className="flex gap-2">
-  //           <Link to={`/admin/teams/edit/${item.id}`}>
-  //             <button className="text-blue-500">Edit</button>
-  //           </Link>
-  //           <DeleteTeams Teams id={item.id} />
-  //         </div>
-  //       ),
-  //     },
-  //   ],
-  //   []
-  // );
+  useCustom("search", data, {
+    state: { search },
+    onChange: onSearchChange,
+  });
+
+  function onSearchChange(action, state) {
+    console.log(action, state);
+  }
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching teams</div>;
-
   return (
     <>
-      <Stack spacing={2} mb={2}>
+      <Stack spacing={1} mb={2}>
         <TextField
+          id="search"
           label="Search Team"
           variant="outlined"
           value={search}
           onChange={handleSearch}
         />
       </Stack>
-
-      {filteredData.length === 0 ? (
-        <div className="text-center text-gray-500 py-8">No available data</div>
-      ) : (
-        // <CompactTable
-        //   columns={COLUMNS}
-        //   data={{ nodes: filteredData }}
-        //   theme={theme}
-        //   rowKey="id"
-        // />
-        <Table data={tableData} sort={sort} theme={theme}>
-          {(tableList) => (
-            <>
-              <Header>
-                <HeaderRow
-                  style={{
-                    backgroundColor: "#4b5462",
-                    color: "#ffffff",
-                  }}
-                >
-                  <HeaderCellSort sortKey="NAME">
-                    <div className="p-2">NAME</div>
-                  </HeaderCellSort>
-                  <HeaderCellSort sortKey="ALIAS">
-                    <div className="p-2">ALIAS</div>
-                  </HeaderCellSort>
-                  <HeaderCell>
-                    <div className="p-2">LOGO</div>
-                  </HeaderCell>
-                  <HeaderCellSort sortKey="CREATED_AT">
-                    <div> CREATED AT</div>
-                  </HeaderCellSort>
-                  <HeaderCell>
-                    <div> ACTION</div>
-                  </HeaderCell>
-                </HeaderRow>
-              </Header>
-              <Body>
-                {tableList.map((item) => (
+      {/* {filteredData.length === 0 ? (
+        <div className="text-center text-gray-500 py-4">No available data</div>
+      ) : ( */}
+      <Table data={{ nodes: filteredData }} sort={sort} theme={theme}>
+        {(tableList) => (
+          <>
+            <Header>
+              <HeaderRow
+                style={{
+                  backgroundColor: "#4b5462",
+                  color: "#ffffff",
+                }}
+              >
+                <HeaderCellSort sortKey="NAME">
+                  <div className="p-2">NAME</div>
+                </HeaderCellSort>
+                <HeaderCellSort sortKey="ALIAS">
+                  <div className="p-2">ALIAS</div>
+                </HeaderCellSort>
+                <HeaderCell>
+                  <div className="p-2">LOGO</div>
+                </HeaderCell>
+                <HeaderCellSort sortKey="CREATED_AT">
+                  <div> CREATED AT</div>
+                </HeaderCellSort>
+                <HeaderCell>
+                  <div> ACTION</div>
+                </HeaderCell>
+              </HeaderRow>
+            </Header>
+            <Body>
+              {filteredData.length === 0 ? (
+                <Row>
+                  <div
+                    style={{
+                      gridColumn: "1 / -1",
+                      textAlign: "center",
+                      padding: "1rem",
+                      backgroundColor: "#ffffff",
+                    }}
+                  >
+                    No available data.
+                  </div>
+                </Row>
+              ) : (
+                tableList.map((item) => (
                   <Row key={item.id} item={item}>
                     <Cell>
                       <div className="p-2">{item.name} </div>
@@ -207,12 +193,12 @@ const ShowTeams = ({ division_id }) => {
                       </div>
                     </Cell>
                   </Row>
-                ))}
-              </Body>
-            </>
-          )}
-        </Table>
-      )}
+                ))
+              )}
+            </Body>
+          </>
+        )}
+      </Table>
     </>
   );
 };
